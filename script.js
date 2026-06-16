@@ -1,16 +1,26 @@
-'use strict';
+"use strict";
 
-const sortByLength = function (array) {
-  for (let i = 0; i < array.length; i++) {
-    for (let j = 0; j < array.length - 1; j++) {
-      if (array[j].length > array[j + 1].length) {
-        let item = array[j];
+const sortMain = function(list) {
+  for (let i = 0; i < list.length; i++) {
+    for (let j = 0; j < list.length-1; j++) {
+      if (list[j] > list[j + 1]) {
+        let item = list[j];
 
-        array[j] = array[j + 1];
-        array[j + 1] = item;
+        list[j] = list[j + 1];
+        list[j + 1] = item;
       }
     }
   }
-  return array;
+  return list;
 };
-console.log(sortByLength(["Telescopes", "Glasses", "Eyes", "Monocles"]));
+
+function flattenAndSort(array) {
+  const total = [];
+
+  array.forEach((item) => {
+    total.push(...item);
+  });
+
+  return sortMain(total);
+}
+console.log(flattenAndSort([[1,3,5],[100],[2,4,6]]));
