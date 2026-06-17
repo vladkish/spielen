@@ -1,26 +1,66 @@
-"use strict";
+'use strict';
 
-const sortMain = function(list) {
-  for (let i = 0; i < list.length; i++) {
-    for (let j = 0; j < list.length-1; j++) {
-      if (list[j] > list[j + 1]) {
-        let item = list[j];
-
-        list[j] = list[j + 1];
-        list[j + 1] = item;
-      }
+const vehicle = {
+  type: 'Vehicle',
+  speed: 0,
+  maxSpeed: 50,
+  accelerate() {
+    if (this.speed + 10 <= this.maxSpeed) {
+      this.speed += 10;
+    } else {
+      console.log('max speed');
     }
+  },
+  brake() {
+    if (this.speed >= 10) {
+      this.speed -= 10;
+    } else if (this.speed > 0) {
+      this.speed = 0;
+    }
+  },
+  info() {
+    const { type, speed, maxSpeed } = this;
+    return `${type}: right now speed ${speed}/${maxSpeed}`;
   }
-  return list;
 };
 
-function flattenAndSort(array) {
-  const total = [];
+// Car object
+const car = Object.create(vehicle);
+car.fuelLevel = 100;
+car.refuel = function() {
+  if (this.fuelLevel < 100) {
+    this.fuelLevel += 50;
+    if (this.fuelLevel > 100) this.fuelLevel = 100;
+  } else {
+    console.log('max');
+  }
+};
+car.accelerate = function() {
+  this.fuelLevel -= 5;
+  this.speed += 10;
+  if (this.speed > this.maxSpeed) {
+    this.speed = this.maxSpeed;
+  }
+};
 
-  array.forEach((item) => {
-    total.push(...item);
-  });
+// Create objects
+const bike = Object.create(vehicle);
+const myCar = Object.create(car);
+const truck = Object.create(vehicle);
 
-  return sortMain(total);
-}
-console.log(flattenAndSort([[1,3,5],[100],[2,4,6]]));
+// Control
+bike.accelerate();
+bike.accelerate();
+console.log(bike.info());
+
+myCar.accelerate();
+myCar.accelerate();
+console.log(myCar.info());
+console.log("Топливо:", myCar.fuelLevel);
+
+myCar.refuel();
+console.log("Топливо после заправки:", myCar.fuelLevel);
+
+truck.brake();
+truck.brake();
+console.log(truck.info());
