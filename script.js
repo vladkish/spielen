@@ -1,66 +1,53 @@
 'use strict';
 
-const vehicle = {
-  type: 'Vehicle',
-  speed: 0,
-  maxSpeed: 50,
-  accelerate() {
-    if (this.speed + 10 <= this.maxSpeed) {
-      this.speed += 10;
-    } else {
-      console.log('max speed');
-    }
-  },
-  brake() {
-    if (this.speed >= 10) {
-      this.speed -= 10;
-    } else if (this.speed > 0) {
-      this.speed = 0;
-    }
-  },
-  info() {
-    const { type, speed, maxSpeed } = this;
-    return `${type}: right now speed ${speed}/${maxSpeed}`;
-  }
-};
+const createChat = function() {
 
-// Car object
-const car = Object.create(vehicle);
-car.fuelLevel = 100;
-car.refuel = function() {
-  if (this.fuelLevel < 100) {
-    this.fuelLevel += 50;
-    if (this.fuelLevel > 100) this.fuelLevel = 100;
-  } else {
-    console.log('max');
-  }
-};
-car.accelerate = function() {
-  this.fuelLevel -= 5;
-  this.speed += 10;
-  if (this.speed > this.maxSpeed) {
-    this.speed = this.maxSpeed;
-  }
-};
+    // memore chat
+    const allMessage = {
+        'allChat' : []
+    };
 
-// Create objects
-const bike = Object.create(vehicle);
-const myCar = Object.create(car);
-const truck = Object.create(vehicle);
+    return {
+        send: function (username, message) {
 
-// Control
-bike.accelerate();
-bike.accelerate();
-console.log(bike.info());
+            // all Chat.
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
 
-myCar.accelerate();
-myCar.accelerate();
-console.log(myCar.info());
-console.log("Топливо:", myCar.fuelLevel);
+            const dateAndTime = `${hours}:${minutes}`
+            allMessage.allChat.push(`${dateAndTime} ${username} : ${message}`);
 
-myCar.refuel();
-console.log("Топливо после заправки:", myCar.fuelLevel);
+            // list chat 
+            if (allMessage[username]) {
+                allMessage[username].push(message);
+            } else {
+                allMessage[username] = [];
+                allMessage[username].push(message);
+            }
+        }, 
+        history: function (username) {
+            return `${username} : ${allMessage[username].join('\n')}`;
+        },
+        clear: function (username) {
+            allMessage[username].length = 0;
+        },
+        messageCount: function (username) {
+            return allMessage[username].length;
+        },
+        allChatShowen : function() {
+            return allMessage.allChat;
+        }
+    };
+}
 
-truck.brake();
-truck.brake();
-console.log(truck.info());
+// create Chat.
+const mainChat = createChat();
+
+mainChat.send('Alice', "hello");
+
+mainChat.send('Bob', 'Hello, how are you ?');
+mainChat.send('Bob', 'Hello, how are you ?');
+mainChat.send('Bob', 'Hello, how are you ?');
+
+console.log(mainChat.history('Bob'));
