@@ -1,53 +1,36 @@
 'use strict';
 
-const createChat = function() {
+// initialization style for object.
+const button = document.querySelector('button');
+button.classList.add('onclick-function');
+button.style.cssText = `
+    color : white; 
+    background-color : black;
+    border : 4px solid red;
+    cursor: progress;
+`;
 
-    // memore chat
-    const allMessage = {
-        'allChat' : []
-    };
+let backgorund = document.body.style.backgroundColor = 'gray';
 
-    return {
-        send: function (username, message) {
+// function onclikc.
+function click_function() {
+    // red object's.
+    const block = document.getElementById('box'),
+        hearts = document.querySelectorAll('.heart')
 
-            // all Chat.
-            const now = new Date();
-            const hours = now.getHours();
-            const minutes = now.getMinutes();
+    if (backgorund == 'gray') {
+        backgorund = document.body.style.backgroundColor = 'red';
 
-            const dateAndTime = `${hours}:${minutes}`
-            allMessage.allChat.push(`${dateAndTime} ${username} : ${message}`);
+        block.style.backgroundColor = 'gray';
+        hearts.forEach(item => {
+            item.style.backgroundColor = 'gray';
+        });
+    } else {
+        backgorund = document.body.style.backgroundColor = 'gray';
 
-            // list chat 
-            if (allMessage[username]) {
-                allMessage[username].push(message);
-            } else {
-                allMessage[username] = [];
-                allMessage[username].push(message);
-            }
-        }, 
-        history: function (username) {
-            return `${username} : ${allMessage[username].join('\n')}`;
-        },
-        clear: function (username) {
-            allMessage[username].length = 0;
-        },
-        messageCount: function (username) {
-            return allMessage[username].length;
-        },
-        allChatShowen : function() {
-            return allMessage.allChat;
-        }
-    };
+        block.style.backgroundColor = 'red';
+        hearts.forEach(item => {
+            item.style.backgroundColor = 'red';
+        });
+    }
 }
-
-// create Chat.
-const mainChat = createChat();
-
-mainChat.send('Alice', "hello");
-
-mainChat.send('Bob', 'Hello, how are you ?');
-mainChat.send('Bob', 'Hello, how are you ?');
-mainChat.send('Bob', 'Hello, how are you ?');
-
-console.log(mainChat.history('Bob'));
