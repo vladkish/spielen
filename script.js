@@ -1,58 +1,118 @@
 'use strict';
 
-// style
-const content = document.createElement('div');
-content.textContent = 'take';
-content.classList.add('block');
-content.style.cssText = `
-    color : white;
-    border : 5px solid pink;
-    background : red;
-    padding : 50px;
+// FAQ.
+function FAQ() {
+    // object answer
+    const answer = {
+        1: 'answer 1',
+        2: 'answer 2',
+        3: 'answer 3',
+        4: 'answer 4',
+    };
 
-    position: absolute;
-    top : 250px;
-    left : 100px;
+    const blockQuestion = document.querySelector('.block-question');
+    let objectAnswer = document.createElement('h1');
 
-    max-width: 50px;
-    max-height: 50px;
-`;
-
-// native-positon - div.
-const blockExample = document.createElement('div');
-blockExample.textContent = 'HEREE'
-blockExample.style.cssText = `
-    color : white;
-    border : 5px solid black;
-    background : white;
-    padding : 50px;
-    color : black;
-
-    max-width: 50px;
-    max-height: 50px;
-`;
-
-// body
-document.body.style.background = 'gray';
-
-// create.
-document.body.append(content);
-document.body.append(blockExample);
-
-window.addEventListener('DOMContentLoaded', () => {
-    const block = document.querySelector('.block');
-
-    block.addEventListener('touchmove', (e) => {
-        const y = Math.round(e.changedTouches[0].pageY);
-        const x = Math.round(e.changedTouches[0].pageX);
-        block.style.cssText += `
-            position: absolute;
-            top : ${y}px;
-            left : ${x}px;
-        `;
-
-        if (y >= -25 && y <= 25 && x >= -25 && x <= 25) {
-            alert("GREAT");
+    blockQuestion.addEventListener('click', (even) => {
+        if (even.target.matches('button') && even.target) {
+            const index = even.target.attributes['data-number'].value;
+            // create object(answer).
+            objectAnswer.textContent = answer[index];
+            even.target.append(objectAnswer);
         }
     });
-});
+}
+FAQ();
+
+// Burger menu.
+function burgerMenu() {
+    // button Menu.
+    const buttonMenu = document.querySelector('.burger');
+
+    // menuPlace.
+    const menuPlace = document.createElement('div');
+    menuPlace.style.cssText = `
+        position: absolute;
+        left: 0;
+        bottom: 0;
+
+        width: 100%;
+        height: 100%;
+        background : black;
+
+        color : white;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    `;
+
+    // all text from header.
+    const ul = document.querySelector('.ul');
+    ul.style.cssText = `
+        * {
+            color : white !important;
+        }
+    `;
+
+    // close 'X'.
+    const buttonClose = document.createElement('button');
+    buttonClose.textContent = 'X'
+    buttonClose.style.cssText = `
+        color : white;
+        background : red;
+        padding : 20px;
+        maring : 20px;
+        border : 2px solid white;
+        border-radius : 70px;
+
+        position: absolute;
+        right: 0px; 
+    `;
+
+    // function menu.
+    function menu() {
+        buttonMenu.addEventListener('click', () => {
+            if (buttonMenu.classList.contains('noactiv')) {
+                document.body.append(menuPlace);
+                menuPlace.append(ul);
+                menuPlace.append(buttonClose);
+
+                document.querySelector('.header').style.cssText = `
+                    display : none;
+                `;
+
+                buttonClose.addEventListener('click', () => {
+                    menuPlace.remove();
+
+                    document.querySelector('.header').style.cssText = `
+                        display : block;
+                    `;
+                    document.querySelector('.logo').append(ul);
+                })
+            }
+        });
+    }
+    menu();
+}
+burgerMenu();
+
+// change theme
+function changeTheme() {
+    const buttonChange = document.querySelector('.theme-toggle');
+
+    const example = [
+        document.querySelector('.section-main'), 
+        document.querySelector('.header'), 
+        document.querySelector('.block')
+    ];
+
+    buttonChange.addEventListener('click', () => {
+        example.forEach(item => {
+            item.classList.toggle('dark');
+        });
+    });
+}
+
+changeTheme();
