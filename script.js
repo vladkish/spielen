@@ -22,7 +22,6 @@ function FAQ() {
         }
     });
 }
-FAQ();
 
 // Burger menu.
 function burgerMenu() {
@@ -96,7 +95,6 @@ function burgerMenu() {
     }
     menu();
 }
-burgerMenu();
 
 // change theme
 function changeTheme() {
@@ -115,4 +113,13 @@ function changeTheme() {
     });
 }
 
-changeTheme();
+// data in project.
+const data = {
+    'faq' : FAQ,
+    'changeTheme' : changeTheme,
+    'burgerMenu' : burgerMenu
+}
+
+data.faq();
+data.changeTheme();
+data.burgerMenu();
