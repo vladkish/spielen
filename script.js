@@ -36,7 +36,7 @@ firstButton.addEventListener('click', () => {
 });
 
 
-const lastButton = document.querySelector('#goLastBtn');
+const lastButton = document.querySelector('#goLastBJtn');
 
 lastButton.addEventListener('click', () => {
     const last = allObjectLis.lastElementChild;
