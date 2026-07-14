@@ -1,36 +1,26 @@
 'use strict';
 
-// initialization style for object.
-const button = document.querySelector('button');
-button.classList.add('onclick-function');
-button.style.cssText = `
-    color : white; 
-    background-color : black;
-    border : 4px solid red;
-    cursor: progress;
-`;
+const allObjectLis = document.querySelector('#categoryList');
 
-let backgorund = document.body.style.backgroundColor = 'gray';
+allObjectLis.addEventListener('click', (even) => {
+    const item = even.target;
 
-// function onclikc.
-function click_function() {
-    // red object's.
-    const block = document.getElementById('box'),
-        hearts = document.querySelectorAll('.heart')
+    // reset style for every object.
+    [...allObjectLis.children].forEach(li => {
+        li.style.cssText = '';
+    });
 
-    if (backgorund == 'gray') {
-        backgorund = document.body.style.backgroundColor = 'red';
+    const previous = item.previousElementSibling;
+    const next = item.nextElementSibling;
 
-        block.style.backgroundColor = 'gray';
-        hearts.forEach(item => {
-            item.style.backgroundColor = 'gray';
-        });
-    } else {
-        backgorund = document.body.style.backgroundColor = 'gray';
-
-        block.style.backgroundColor = 'red';
-        hearts.forEach(item => {
-            item.style.backgroundColor = 'red';
-        });
+    if (previous) {
+        previous.style.cssText = `color : red`;
+        console.log(true);
     }
-}
+
+    if (next) {
+        next.style.cssText = `color : red`;
+        console.log(true);
+    }
+    item.style.cssText = `transform : scale(1.3)`;
+}, {once : false});
