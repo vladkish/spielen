@@ -5,7 +5,7 @@ const allObjectLis = document.querySelector('#categoryList');
 allObjectLis.addEventListener('click', (even) => {
     const item = even.target;
 
-    // reset style for every object.
+    // reset style for every object with operation SP..READ.
     [...allObjectLis.children].forEach(li => {
         li.style.cssText = '';
     });
