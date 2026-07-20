@@ -1,150 +1,58 @@
 'use strict';
 
-const main = function() {
+// style
+const content = document.createElement('div');
+content.textContent = 'take';
+content.classList.add('block');
+content.style.cssText = `
+    color : white;
+    border : 5px solid pink;
+    background : red;
+    padding : 50px;
 
-    const body = document.body;
-    body.style.cssText = `
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    position: absolute;
+    top : 250px;
+    left : 100px;
 
-        height: 100vh;
-        width: 100vw;
+    max-width: 50px;
+    max-height: 50px;
+`;
 
-        margin: 0;
-    `;
+// native-positon - div.
+const blockExample = document.createElement('div');
+blockExample.textContent = 'HEREE'
+blockExample.style.cssText = `
+    color : white;
+    border : 5px solid black;
+    background : white;
+    padding : 50px;
+    color : black;
 
-    const section = document.createElement('section');
-    section.classList.add('section');
+    max-width: 50px;
+    max-height: 50px;
+`;
 
-    section.style.cssText = `
-        border-radius: 16px;
-        background: #fff5f7;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+// body
+document.body.style.background = 'gray';
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
+// create.
+document.body.append(content);
+document.body.append(blockExample);
 
-        padding: 30px 40px;
-    `;
+window.addEventListener('DOMContentLoaded', () => {
+    const block = document.querySelector('.block');
 
-    const blockInSection = document.createElement('div');
-    blockInSection.style.cssText = `
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        gap: 20px;
-    `;
-    blockInSection.classList.add('block-in-section');
+    block.addEventListener('touchmove', (e) => {
+        const y = Math.round(e.changedTouches[0].pageY);
+        const x = Math.round(e.changedTouches[0].pageX);
+        block.style.cssText += `
+            position: absolute;
+            top : ${y}px;
+            left : ${x}px;
+        `;
 
-    const text = document.createElement('h1');
-    text.innerHTML = '<h1>maybe you will forgive me?🥹</h1>';
-    text.style.cssText = `
-        color: #4a4a4a;
-        font-size: 24px;
-        text-align: center;
-        padding: 10px 25px;
-        margin: 0;
-    `;
-
-    const blockButtons = document.createElement('div');
-    blockButtons.classList.add('block-buttons');
-    blockButtons.style.cssText = `
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 25px;
-    `;
-
-    const firstButton = document.createElement('block');
-    firstButton.innerHTML = '<h1>Yes</h1>';
-    firstButton.style.cssText = `
-        background: #2ecc71;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: transform 0.2s ease, background 0.2s ease;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        padding: 14px 28px;
-    `;
-
-    const secondButton = document.createElement('block');
-    secondButton.innerHTML = '<h1>No</h1>';
-    secondButton.style.cssText = `
-        background: #e74c3c;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: transform 0.2s ease, background 0.2s ease;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        padding: 14px 28px;
-    `;
-
-    body.append(section);
-    section.append(blockInSection);
-
-    blockInSection.append(text);
-    blockInSection.append(blockButtons);
-
-    blockButtons.append(firstButton);
-    blockButtons.append(secondButton);
-
-    // even.
-    evenForYes(firstButton);
-    evenForNo(secondButton);
-};
-
-// function's event handler.
-function evenForYes(button) {
-    const styleButton = button.style.cssText;
-    button.addEventListener('mouseenter', () => {
-        button.style.cssText = styleButton + `transform : scale(1.1);`
+        if (y >= -25 && y <= 25 && x >= -25 && x <= 25) {
+            alert("GREAT");
+        }
     });
-
-    button.addEventListener('mouseleave', () => {
-        button.style.cssText = styleButton;
-    });
-
-    // work with click.
-    button.addEventListener('click', () => {
-        alert('THANK YOU VERY MATCH, MY BABY');
-    })
-}
-
-function evenForNo(button) {
-    let styleButton = button.style.cssText;
-
-    button.addEventListener('mouseenter', () => {
-        button.style.cssText = styleButton + `transform : scale(1.1);`
-    });
-
-    button.addEventListener('mouseleave', () => {
-        button.style.cssText = styleButton;
-    });
-
-    // work with click.
-    button.addEventListener('click', () => {
-        button.textContent = 'ОТКАЗАНО';        
-    });
-
-    button.addEventListener('dblclick', () => {
-        button.textContent = 'нет, сказал';        
-    });
-}
-
-main();
+});
