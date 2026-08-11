@@ -2,6 +2,10 @@
   display: none;
 }
 
+.noactive {
+  display : none;
+}
+
 .active {
   display: block;
 }

@@ -3,18 +3,23 @@
 window.addEventListener('DOMContentLoaded', () => {
 
     function hide() {
-        document.querySelectorAll('div').forEach(item => {
-            item.classList.toggle('active');
+        document.querySelectorAll('.hide').forEach(item => {
+            item.classList.remove('active');
+            item.classList.add('noactive');
         })
     }
 
     function show(id='home') {
         const home = document.querySelector(`#${id}`);
-        home.classList.toggle('active');
+
+        if (home.classList.contains('noactive')) {
+            home.classList.remove('noactive')
+        } 
+        home.classList.add('active');
     }
 
+    // show();
     hide();
-    show();
 
     document.body.addEventListener('click', (even) => {
         const target = even.target;
@@ -23,7 +28,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 if (target === item) {
                     hide();
                     show(item.attributes['data-tab'].value);
-                    // console.log(item.attributes['data-tab'].value);
                 }
             });
         }
