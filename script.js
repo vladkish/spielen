@@ -1,37 +1,31 @@
 'use strict';
 
 window.addEventListener('DOMContentLoaded', () => {
-    const tabs = document.querySelectorAll('.tabs');
-    const content = document.querySelectorAll('.content');
 
-    function hiden() {
-        content.forEach(item => {
-            item.style.display = 'none';
-        })
-
-        tabs.forEach(item => {
-            item.classList.remove('active');
+    function hide() {
+        document.querySelectorAll('div').forEach(item => {
+            item.classList.toggle('active');
         })
     }
 
-    function show(tab = 0) {
-        content[tab].style.display = 'block';
-        tabs[tab].classList.add('active');
+    function show(id='home') {
+        const home = document.querySelector(`#${id}`);
+        home.classList.toggle('active');
     }
 
-    hiden();
+    hide();
     show();
 
     document.body.addEventListener('click', (even) => {
         const target = even.target;
-
         if (target) {
-            tabs.forEach((item, index) => {
-                if (item === target) {
-                    hiden();
-                    show(index);
+            document.querySelectorAll('button').forEach((item, index) => {
+                if (target === item) {
+                    hide();
+                    show(item.attributes['data-tab'].value);
+                    // console.log(item.attributes['data-tab'].value);
                 }
             });
         }
     });
-})
+});
