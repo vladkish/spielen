@@ -36,5 +36,22 @@ window.addEventListener('DOMContentLoaded', () => {
             arrayButtons.push(takeDate);
         }
     });
-    console.dir(arrayButtons);
-})
+
+    function changeTheme() {
+        const button = document.querySelector('.change-theme');
+
+        // take objects.
+        const playSection = document.querySelector('.play-section');
+        const playButton = document.querySelector('.playButton');
+        
+        button.addEventListener('click', () => {
+            playSection.classList.toggle('black-theme');
+            playButton.classList.toggle('black-theme');
+
+            document.body.style.background = 'gray !importantgit a';
+        });
+    }
+    
+    changeTheme();
+});
+
